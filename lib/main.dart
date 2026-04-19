@@ -65,6 +65,31 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+
+    Map<String, dynamic> mapQuestion(Map<String, dynamic> q) {
+      final answers = (q['answers'] as List)
+            .whereType<Map<String, dynamic>>()
+            .where((a) => (a['text'] ?? '').toString().isNotEmpty)
+            .toList();
+
+      final correct = answers.firstWhere((a) => a['isCorrect'] == true);
+
+      return {
+        'question': q['text'],
+        'options': answers.map((a) => a['text'].toString()).toList(),
+        'correctAnswer': correct['text'].toString(),
+      };
+    }
+
+    List<String> getShuffledAnswers(Map<String, dynamic> question) {
+      final answers = (question['answers'] as List)
+            .whereType<Map<String, dynamic>>()
+            .map((a) => (a['text'] ?? '').toString())
+            .where((text) => text.isNotEmpty)
+            .toList();
+        answers.shuffle();
+      return answers;
+    }
   }
 
   @override
@@ -118,5 +143,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+  String? _selectedAnswer;
+  bool _answered = false;
+
+  Color _buttonColor(String option) {
+    if (!_answered) return Colors.white;
+    //if (option == correctAnswer) return Colors.green.shade100;
+    if (option == _selectedAnswer) return Colors.red.shade100;
+    return Colors.white;
   }
 }
