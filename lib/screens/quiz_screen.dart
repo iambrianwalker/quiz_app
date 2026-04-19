@@ -66,6 +66,16 @@ class _QuizScreenState extends State<QuizScreen> {
 
     final correct = _questions[_currentIndex].correctAnswer;
     setState(() {
+      final isCorrect = answer == correct;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(isCorrect ? '✅ Correct!' : '❌ Wrong! Correct: $correct'),
+          backgroundColor: isCorrect ? Colors.green.shade700 : Colors.red.shade700,
+          duration: const Duration(milliseconds: 1200),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      );
       _selectedAnswer = answer;
       _answered = true;
       if (answer == correct) _score++;
