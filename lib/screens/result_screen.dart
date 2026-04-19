@@ -16,6 +16,13 @@ class ResultScreen extends StatelessWidget {
     return 'Better luck next time! 🎯';
   }
 
+  String get _imagePath {
+    if (score > 5) {
+      return 'assets/images/success.png';
+    }
+    return 'assets/images/try_again.png';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +32,12 @@ class ResultScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                _imagePath,
+                height: 150,
+                width: 150,
+                fit: BoxFit.contain,
+              ),
               Text('Quiz Complete!',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 28),
