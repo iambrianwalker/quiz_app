@@ -67,6 +67,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final correct = _questions[_currentIndex].correctAnswer;
     setState(() {
       final isCorrect = answer == correct;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(isCorrect ? '✅ Correct!' : '❌ Wrong! Correct: $correct'),
